@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"log"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 )
@@ -11,7 +12,7 @@ func CheckRole(next echo.HandlerFunc) echo.HandlerFunc {
 		// get user role
 		userRole := ctx.Request().Header.Get("User-role")
 
-		if userRole == "admin" {
+		if strings.EqualFold(userRole, "admin") {
 			log.Print("red button user detected")
 		}
 		// define next middleware

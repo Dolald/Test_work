@@ -21,14 +21,9 @@ func NewApp() (*App, error) {
 	app.s = service.NewService()
 	app.sh = handler.NewStatusHandler(app.s)
 
-	echo := echo.New()
+	app.echo = echo.New()
 	// check user status
-	echo.Use(middleware.CheckRole)
-
-	err := echo.Start(":8080")
-	if err != nil {
-		log.Fatal(err)
-	}
+	app.echo.Use(middleware.CheckRole)
 
 	app.echo.GET("/status", app.sh.GetStatus)
 
